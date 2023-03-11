@@ -1,4 +1,5 @@
 <?php
+
     $users = array( 
         array(
             "username" => "Eliott",
@@ -43,16 +44,17 @@
         return false;
     }
 
-    //à partir du token il renvoie le rôle de l'utilisateur authentifié.
+    //à partir du token cette fonction renvoie l'un  de l'utilisateur authentifié.
     //$token est le JWT récupéré lors de l'envoie d'une requête au serveur.
-    //Return le rôle de l'utilisateur
-    function role_Token($token){
+    //$property est l'information voulue présent dans le champ payload du token (username, rôle, expiration)
+    //Return le rôle/username/expiration de l'utilisateur
+    function getPropertyFromToken($token, $property){
         $tokenParts = explode('.', $token);
         $payload = base64_decode($tokenParts[1]);
-        $role = json_decode($payload)->role;
-        return $role;
+        $value = json_decode($payload)->{$property};
+        return $value;
     }
-
+    
     //Permet de récupérer le rôle d'un utilisateur
     //Lève une exception si le rôle n'est pas valide
     //retourne le rôle un utilisateur
@@ -90,12 +92,79 @@
 
         if($req->bindParam(':id', $id, PDO::PARAM_INT)) {
             if($req->execute()) {
-                return $req->fetchAll(PDO::FETCH_ASSOC);
+                $data = $req->fetchAll(PDO::FETCH_ASSOC);
+                return $data;
             }
         }
         return ERREUR_SQL;
     }
 
+    //Permet d'ajouter un article dans la bd grâce au contenu, auteur, et la date de publication
+    //$linkpdo --> connexion avec la BD
+    //$contenu --> correspond au contenu de l'article présent dans le body de la requête
+    //$auteur --> correspond à l'username de l'utilsateur qui publis l'article
+    //le paramètre date_publication est définie par la fonction PHP NOW()
+    function ajoutArticle($linkpdo, $contenu, $auteur){
+        if (!is_string($contenu)){
+            return ERREUR_PARAM;
+        }
+
+        if (strlen($contenu) > 140) {//Vérification de la contrainte de 140 caractère max dans la bd
+            return ERREUR_PARAM;
+        }
+
+        $linkpdo->beginTransaction();
+
+        try {
+            $req = $linkpdo->prepare('INSERT INTO article (contenu, auteur, date_publication) VALUES (:contenu, :auteur, NOW())');
+        } catch (Exception $e) {
+            $linkpdo->rollback();
+            return ERREUR_SQL;
+        }
+
+        $req->bindParam(':contenu', $contenu, PDO::PARAM_STR);
+        $req->bindParam(':auteur', $auteur, PDO::PARAM_STR);
+        try {
+            $req->execute();
+            $id = $linkpdo->lastInsertId();//permet de récupèrer l'id de la dernière données ajouter à la bd
+        } catch (Exception $e) {
+            $linkpdo->rollback();
+            return ERREUR_SQL;
+        }
+
+        $linkpdo->commit();
+        return $id;//retourne l'ID pour la personnalisation du message de retour
+    }
+
+    //Permet de supprimer un article grâce à son ID
+    //$linkpdo --> connexion avec la BD
+    //$id --> id de l'article qui doit être supprimée
+    function deleteArticle($linkpdo, $id){
+        if (!is_numeric($id)){
+            return SYNTAXE;
+        }
+        if (!isID($linkpdo, $id)){//vérification de la présence de l'ID dans la BD
+            return ID_INCONNU;//retourne une erreur ID si non présente dans la BD
+        }
+        $linkpdo->beginTransaction();
+        try {
+            $matchingData = $linkpdo->prepare("DELETE FROM article WHERE id = :id");
+        } catch (Exception $e) { 
+            $linkpdo->rollback();
+            return ERREUR_SQL;
+        }
+        if (!$matchingData->bindParam(':id',$id, PDO::PARAM_INT)){
+            $linkpdo->rollback();
+            return ERREUR_SQL;
+        }
+        try {
+            $matchingData->execute();
+        } catch (Exception $e) {
+            $linkpdo->rollback();
+            return ERREUR_SQL;
+        }
+        return $id;//retourne l'ID pour la personnalisation du message de retour
+    }
     function isID($linkpdo, $id) {
         if(is_null($id) || !is_numeric($id)) {
             return false;
