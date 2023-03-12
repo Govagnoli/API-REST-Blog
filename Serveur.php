@@ -52,22 +52,19 @@
             break;   
         }
         $auteur = getPropertyFromToken($bearer_token, 'username');//récupère l'username présent dans le payload du token
-        $role = getPropertyFromToken($bearer_token, 'role');////récupère le rôle présent dans le payload du token
-        echo $role; 
-        if ($role = 'moderator' || $role == 'anonyme'){
-            deliver_response(401, "Permission non accordée", NULL);
+        $role = getPropertyFromToken($bearer_token, 'role');//récupère le rôle présent dans le payload du token
+        if ($role == 'moderator' || $role == 'anonyme'){
+            deliver_response(401, "Permission non accordée", "Rôle : ".$role);
             break;
         }
-        if ($role = 'publisher'){
+        if ($role == 'publisher'){
             if (!empty($postData['contenu'])) {
                 $code = ajoutArticle($linkpdo, $postData['contenu'], $auteur);
-                if (!is_int($code)) {     
-                    testsErreurs($code, "Article crée avec succès", "ID de l'article : ".$code);
-                } else {
+                if (!is_numeric($code)) {     
                     testsErreurs($code, "<<<< Erreur >>>>", NULL);
+                    break;
                 }
-            } else {
-                deliver_response(400, "<<<< Données non valides >>>>", NULL);
+                testsErreurs($code, "Article crée avec succès", "ID de l'article : ".$code);
             }
         }
         break;
@@ -83,19 +80,21 @@
         }
 
         $role = getPropertyFromToken($bearer_token, 'role');
-        if ($role = 'anonyme'){ //Empêche la suppression pour les utilisateurs "anonyme"
+        if ($role == 'anonyme'){ //Empêche la suppression pour les utilisateurs "anonyme"
             deliver_response(401, "Permission non accordée", NULL);
             break;
         }
 
-        if($role == 'publisher') {// Limite la suppression d'articles ?
+        if($role == 'publisher') { // Limite la suppression d'articles ?
             echo 'mahh';
         } elseif($role == 'moderator') {
             //Traitement pour la suppression d'un Article
-            if(!empty($_GET['id'])) {
-                $code = deleteArticle($linkpdo, $_GET['id']);
-                testsErreurs($code, "Suppression validee", "ID : ".$code);
-            } 
+            if(empty($_GET['id'])) {
+                testsErreurs($code, "<<<< Erreur >>>>", NULL);
+                break;
+            }
+            $code = deleteArticle($linkpdo, $_GET['id']);
+            testsErreurs($code, "Suppression validee", "ID : ".$code); 
         }
         break;
     }
