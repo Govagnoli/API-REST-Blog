@@ -181,7 +181,6 @@
             return null;
         } elseif(!empty($bearer_token)) {
             return getPropertyFromToken($bearer_token, 'role');
-            
         }
         return 'anonyme';
     }
