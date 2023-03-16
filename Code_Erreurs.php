@@ -9,7 +9,7 @@
     define("SYNTAXE", -1); //La syntaxe de la requête est erronée : Erreur 400
     define("ERREUR_SQL", -2); //Peut-être vue comme une erreur système : Erreur 500
     define("CORRECT", -100); 
-
+    define("TOKEN", -3); //Erreur de token
     
     define("BODY_INCOMPLET", -4);
     define("ID_INCONNU", -5); //Si l'id est correct, mais pas présent dans la BD

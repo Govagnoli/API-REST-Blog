@@ -16,14 +16,8 @@
         $bearer_token = get_bearer_token();
 
         //définie le rôle de l'utilisateur
-        if(!empty($bearer_token) && !is_jwt_valid($bearer_token)) {
-            deliver_response(500, "Erreur de Token.", NULL);
-            break;   
-        } elseif(!empty($bearer_token)) {
-            $role = role_Token($bearer_token);
-        } else {
-            $role = null;
-        }
+        $role = verifRole($bearer_token);
+        if(is_null($role)) { deliver_response(500, "Erreur de Token.", NULL); break; }
 
         //séparation des droits
         if($role == 'publisher') {
@@ -84,9 +78,9 @@
                     deliver_response(400, "L'identifiant renseigné n'existe pas.", NULL);
                     break;
                 }
+                $articles = getArticle($linkpdo, $_GET['id']);
+                testsErreurs($articles, "Résultat de la recherche de l'identifiant ".$_GET['id'].":", $varARetourner=$articles, $codeHTTP=200);
             }
-            $articles = getArticle($linkpdo, $_GET['id']);
-            testsErreurs($articles, "Résultat de la recherche de l'identifiant ".$_GET['id'].":", $varARetourner=$articles, $codeHTTP=200);
         }
         break;
     case "POST":
@@ -96,11 +90,10 @@
         $bearer_token = '';
         $bearer_token = get_bearer_token();
 
-        //Vérifie si le jwt est valides
-        if(!is_jwt_valid($bearer_token)) {
-            deliver_response(500, "Erreur de Token", NULL);
-            break;   
-        }
+        //définie le rôle de l'utilisateur
+        $role = verifRole($bearer_token);
+        if(is_null($role)) { deliver_response(500, "Erreur de Token.", NULL); break; }
+
         $auteur = getPropertyFromToken($bearer_token, 'username');//récupère l'username présent dans le payload du token
         $role = getPropertyFromToken($bearer_token, 'role');//récupère le rôle présent dans le payload du token
         if ($role == 'moderator' || $role == 'anonyme'){
@@ -123,11 +116,9 @@
         $bearer_token = '';
         $bearer_token = get_bearer_token();
 
-        //Vérifie si le jwt est valides
-        if(!is_jwt_valid($bearer_token)) {
-            deliver_response(500, "Erreur de Token", NULL);
-            break;   
-        }
+        //définie le rôle de l'utilisateur
+        $role = verifRole($bearer_token);
+        if(is_null($role)) { deliver_response(500, "Erreur de Token.", NULL); break; }
 
         $role = getPropertyFromToken($bearer_token, 'role');
         if ($role == 'anonyme'){ //Empêche la suppression pour les utilisateurs "anonyme"
@@ -148,6 +139,4 @@
         }
         break;
     }
-
-    
 ?>
