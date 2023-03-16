@@ -92,8 +92,7 @@
 
         if($req->bindParam(':id', $id, PDO::PARAM_INT)) {
             if($req->execute()) {
-                $data = $req->fetchAll(PDO::FETCH_ASSOC);
-                return $data;
+                return $req->fetchAll(PDO::FETCH_ASSOC);
             }
         }
         return ERREUR_SQL;
@@ -165,6 +164,7 @@
         }
         return $id;//retourne l'ID pour la personnalisation du message de retour
     }
+    
     function isID($linkpdo, $id) {
         if(is_null($id) || !is_numeric($id)) {
             return false;

@@ -12,19 +12,19 @@
         // Récupération des données envoyées par le Client
         $postedData = file_get_contents('php://input');
         $data = json_decode($postedData);
-        
+
         if (!isValidUser($data->username, $data->password)) {
             echo "Erreur d'authentification"; //Erreur 401
         }
-
+        
         $role = getRole($data->username, $data->password);
         $headers = array('alg'=>'HS256','typ'=>'JWT');
         $payload = array('username'=>$data->username, 'exp'=>(time() + 300), 'role'=>$role);
         $jwt = generate_jwt($headers, $payload);
-        echo $jwt;
+        deliver_response(200, "Vous êtes bien authentifié en tant que ".$role.". Voici votre token :", $jwt);
         break;
     default:
-        echo "Erreur 501"; //Erreur 501
+        deliver_response(501, "Erreur d'authentification.", NULL);
         break;
     }
 ?>

@@ -15,17 +15,39 @@
         $bearer_token = '';
         $bearer_token = get_bearer_token();
 
-        //Vérifie si le jwt est valides
-        if(!is_jwt_valid($bearer_token)) {
-            deliver_response(500, "Erreur de Token", NULL);
+        //définie le rôle de l'utilisateur
+        if(!empty($bearer_token) && !is_jwt_valid($bearer_token)) {
+            deliver_response(500, "Erreur de Token.", NULL);
             break;   
+        } elseif(!empty($bearer_token)) {
+            $role = role_Token($bearer_token);
+        } else {
+            $role = null;
         }
-
-        $role = getPropertyFromToken($bearer_token, 'role');
 
         //séparation des droits
         if($role == 'publisher') {
-            echo 'mahh';
+            //Traitement pour récupérer un Article
+            if(!empty($_GET['id'])) {
+                if(!isID($linkpdo, $_GET['id'])) {
+                    deliver_response(400, "L'identifiant renseigné n'existe pas.", NULL);
+                    break;
+                }
+                $articles = getArticle($linkpdo, $_GET['id']); 
+                if(!testsErreursSansSucces($articles)) {break;}
+                $nbrLikes = NbrLikes($linkpdo, $_GET['id'], true);
+                if(!testsErreursSansSucces($nbrLikes)) {break;}
+                $nbrDisLikes = NbrLikes($linkpdo, $_GET['id'], false);
+                if(!testsErreursSansSucces($nbrDisLikes)) {break;}
+                $valeursRetour = array(
+                    'auteur' => $articles[0]['auteur'],
+                    'datePublication' => $articles[0]['date_publication'],
+                    'contenu' => $articles[0]['contenu'],
+                    'nbrLikes' => $nbrLikes,
+                    'nbrDisLikes' => $nbrDisLikes
+                );
+                deliver_response(200, "Résultat de la recherche de l'identifiant ".$_GET['id'].":", $valeursRetour);
+            }
         } elseif($role == 'moderator') {
             //Traitement pour récupérer un Article
             if(!empty($_GET['id'])) {
@@ -33,11 +55,39 @@
                     deliver_response(400, "L'identifiant renseigné n'existe pas.", NULL);
                     break;
                 }
-                $code = getArticle($linkpdo, $_GET['id']);
-                testsErreurs($code, "Résultat de la recherche de l'identifiant : ".$_GET['id'], $code);
+                $articles = getArticle($linkpdo, $_GET['id']); 
+                if(!testsErreursSansSucces($articles)) {break;}
+                $listeLikes = allVotes($linkpdo, $_GET['id'], true);
+                if(!testsErreursSansSucces($listeLikes)) {break;}
+                $nbrLikes = NbrLikes($linkpdo, $_GET['id'], true);
+                if(!testsErreursSansSucces($nbrLikes)) {break;}
+                $listeDislikes = allVotes($linkpdo, $_GET['id'], false);
+                if(!testsErreursSansSucces($listeDislikes)) {break;}
+                $nbrDisLikes = NbrLikes($linkpdo, $_GET['id'], false);
+                if(!testsErreursSansSucces($nbrDisLikes)) {break;}
+                $valeursRetour = array(
+                    'auteur' => $articles[0]['auteur'],
+                    'datePublication' => $articles[0]['date_publication'],
+                    'contenu' => $articles[0]['contenu'],
+                    'listeLikes' => $listeLikes,
+                    'nbrLikes' => $nbrLikes,
+                    'listeDislikes' => $listeDislikes,
+                    'nbrDisLikes' => $nbrDisLikes
+                );
+                deliver_response(200, "Résultat de la recherche de l'identifiant ".$_GET['id'].":", $valeursRetour);
             }
+        } else {
+            //Cas si utilisateur non authentifié. (Anonymous)
+            //Traitement pour récupérer un Article
+            if(!empty($_GET['id'])) {
+                if(!isID($linkpdo, $_GET['id'])) {
+                    deliver_response(400, "L'identifiant renseigné n'existe pas.", NULL);
+                    break;
+                }
+            }
+            $articles = getArticle($linkpdo, $_GET['id']);
+            testsErreurs($articles, "Résultat de la recherche de l'identifiant ".$_GET['id'].":", $varARetourner=$articles, $codeHTTP=200);
         }
-
         break;
     case "POST":
         $postedData = file_get_contents('php://input');
