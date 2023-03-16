@@ -120,23 +120,33 @@
         $role = verifRole($bearer_token);
         if(is_null($role)) { deliver_response(500, "Erreur de Token.", NULL); break; }
 
-        $role = getPropertyFromToken($bearer_token, 'role');
         if ($role == 'anonyme'){ //Empêche la suppression pour les utilisateurs "anonyme"
             deliver_response(401, "Permission non accordée", NULL);
             break;
         }
 
         if($role == 'publisher') { // Limite la suppression d'articles ?
-            echo 'mahh';
+            //Si auteur correspond pas
         } elseif($role == 'moderator') {
             //Traitement pour la suppression d'un Article
             if(empty($_GET['id'])) {
-                testsErreurs($code, "<<<< Erreur >>>>", NULL);
+                deliver_response(400, "La syntaxe de la requête est erronée", null);
                 break;
             }
             $code = deleteArticle($linkpdo, $_GET['id']);
             testsErreurs($code, "Suppression validee", "ID : ".$code); 
         }
         break;
+    case "PATCH":
+        $bearer_token = '';
+        $bearer_token = get_bearer_token();
+
+        //définie le rôle de l'utilisateur
+        $role = verifRole($bearer_token);
+        if(is_null($role)) { deliver_response(500, "Erreur de Token.", NULL); break; }
+
+        
+
+
     }
 ?>

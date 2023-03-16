@@ -180,7 +180,8 @@
         if(!empty($bearer_token) && !is_jwt_valid($bearer_token)) {
             return null;
         } elseif(!empty($bearer_token)) {
-            return role_Token($bearer_token);
+            return getPropertyFromToken($bearer_token, 'role');
+            
         }
         return 'anonyme';
     }
