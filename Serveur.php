@@ -3,6 +3,7 @@
     include 'jwt_utils.php';
     include 'Connexion.php';
     include 'Code_Erreurs.php';
+    include 'Vote.php';
     $linkpdo = Connexion::getConnexion();
 
     /// Paramétrage de l'entête HTTP (pour la réponse au Client)
@@ -125,8 +126,18 @@
             break;
         }
 
-        if($role == 'publisher') { // Limite la suppression d'articles ?
-            //Si auteur correspond pas
+        if($role == 'publisher') { // Limite la suppression d'articles, le publisher peut supprimer que ses articles
+            $auteur = getAuteurArticle($linkpdo, $_GET['id']);
+            if(is_numeric($auteur)) {
+                deliver_response(400, "La syntaxe de la requête est erronée", null);
+                break;
+            }
+            if (!($auteur == getPropertyFromToken($bearer_token, 'username'))){
+                deliver_response(401, "Permission non accordée", NULL);
+                break;
+            }
+            $code = deleteArticle($linkpdo, $_GET['id']);
+            testsErreurs($code, "Suppression validee", "ID : ".$code);     
         } elseif($role == 'moderator') {
             //Traitement pour la suppression d'un Article
             if(empty($_GET['id'])) {
