@@ -155,9 +155,38 @@
         //définie le rôle de l'utilisateur
         $role = verifRole($bearer_token);
         if(is_null($role)) { deliver_response(500, "Erreur de Token.", NULL); break; }
-
-        
-
-
+        if($role == 'publisher') {  
+            //traitement du like ou dislike
+            if(!empty($_GET['id']) && !empty($_GET['username'])) {
+                if(!isID($linkpdo, $_GET['id'])) {
+                    deliver_response(404, "Veuillez renseigner un ID existant", "ID : ".$_GET['id']." introuvable");
+                    break;
+                }
+                $usernameVotant = getPropertyFromToken($bearer_token, 'username');
+                if($usernameVotant == $_GET['username']) {
+                    deliver_response(401, "Permission non accordée, un utilisateur ne peut pas liker ou disliker ses posts.", NULL);
+                    break;
+                }   
+                //récupération du body
+                $postedData = file_get_contents('php://input');
+                $data = json_decode($postedData);
+                //vérif si le body contient le bool aimer
+                if(is_null($data->aimer)) {
+                    deliver_response(400, "Il manque des données dans le body. Veuillez préciser si vous avez liké ou disliké un article.", null);
+                    break;
+                }
+                //isUsername
+                if($data->aimer) {
+                    $code = incrementerLikes($linkpdo, $_GET['id'], $usernameVotant);
+                    testsErreurs($code, "Votre like est bien pris en compte.", $varARetourner=null, $codeHTTP=200);
+                    break;
+                }
+                $code = incrementerDisLikes($linkpdo, $_GET['id'], $usernameVotant);
+                testsErreurs($code, "Votre dislike est bien pris en compte.", $varARetourner=null, $codeHTTP=200);
+                break;
+            }
+        } elseif($role == 'moderator' || $role == 'anonyme') {
+            deliver_response(401, "Permission non accordée", NULL);
+        }
     }
 ?>
