@@ -13,6 +13,7 @@
     define("BODY_INCOMPLET", -4);
     define("ID_INCONNU", -5); //Si l'id est correct, mais pas présent dans la BD
     define("ERREUR_PARAM", -6); //Si le contenu de l'article n'est pas un caractère ou contient plus de 140 caractères.
+    define("PERMISSION_NON_ACCORDEE", -7); // Si le role ne permet pas d'executer une methode
 
     //Prend en paramètre un code, une phrase à écrire en cas de 'Réussite' du passage des erreurs et une variable à retourner au client en cas de 'Réussite' du passage des erreurs.
     //Si le code correspond à un message d'erreur connu, alors un message d'erreur sera retourné
@@ -27,6 +28,8 @@
             deliver_response(404, "Veuillez renseigner un ID existant", "ID : ".$_GET['id']." introuvable");
         } elseif($code == ERREUR_SQL) {
             deliver_response(500, "Une erreur est survenue pendant l'execution de la requête.", null);
+        } elseif($code == PERMISSION_NON_ACCORDEE) {
+            deliver_response(401, "Permission non accordée", NULL);
         } elseif(empty($code)) {
             deliver_response(204, "Requête traitée avec succès mais pas d’information à renvoyer.", null);
         } else {
