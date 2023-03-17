@@ -184,4 +184,18 @@
         }
         return 'anonyme';
     }
+
+    // Fonction permettant de récuperer l'auteur de l'article dont l'identifiant est passé en paramétre  de l'url/requête
+    function getAuteurArticle($linkpdo, $id){ 
+        if(empty($id) || !is_numeric($id)) {
+            return SYNTAXE;
+        }
+        $data  = getArticle($linkpdo, $_GET['id']);
+        if (empty($data)){
+            return SYNTAXE;
+        }
+        $data = $data[0];
+        $auteur = $data['auteur'];
+        return $auteur;
+    }
 ?>
