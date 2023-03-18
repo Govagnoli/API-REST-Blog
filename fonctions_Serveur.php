@@ -1,5 +1,4 @@
 <?php
-
     $users = array( 
         array(
             "username" => "Eliott",
@@ -12,7 +11,6 @@
             "rôle" => "publisher"
         )
     );
-
 
     /// Envoi de la réponse au Client
     function deliver_response($status, $status_message, $data){
@@ -89,7 +87,6 @@
         } catch(PDOException $e) {
             return ERREUR_SQL;
         }
-
         if($req->bindParam(':id', $id, PDO::PARAM_INT)) {
             if($req->execute()) {
                 return $req->fetchAll(PDO::FETCH_ASSOC);
@@ -197,5 +194,27 @@
         $data = $data[0];
         $auteur = $data['auteur'];
         return $auteur;
+    }
+
+    //Permet pour un publisher de récupérer tous ses articles
+    //Retourne une liste d'article
+    function sesArticles($linkpdo, $username) {
+        if(is_null($username) || !is_string($username)) {
+            return SYNTAXE;
+        }        
+        try{
+	        $req = $linkpdo->prepare('
+	            SELECT *
+	            FROM article
+	            where auteur = :auteur
+	        ');
+	    } catch(PDOException $e) {
+	        return ERREUR_SQL;
+	    }
+        if(!$req->bindParam(':auteur', $username, PDO::PARAM_STR)) { return ERREUR_SQL; }
+	    if($req->execute()) {
+        	return $req->fetchAll(PDO::FETCH_ASSOC);
+	    }
+        return ERREUR_SQL;
     }
 ?>

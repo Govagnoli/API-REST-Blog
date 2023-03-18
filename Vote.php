@@ -78,26 +78,26 @@
 	//Permet d'ajouter un dislike à un article.
 	//On associera au dislike l'utilisateur ayant disliké
 	function incrementerDisLikes($linkpdo, $id, $nom) {
-		$nbrLikes = NbrLikes($id, true);
-		$nbrDislikes = NbrLikes($id, false);
+		$nbrLikes = NbrLikes($linkpdo, $id, true);
+		$nbrDislikes = NbrLikes($linkpdo, $id, false);
 		//Si l'utilisateur n'a pas voté l'article, alors on ajoute un dislike
 		if($nbrLikes == 0 && $nbrDislikes == 0) {
-			$code = ajouterVote($id, $nom, false);
+			$code = ajouterVote($linkpdo, $id, $nom, false);
 			return $code;
 		} 
 		//Si l'utilisateur avait déjà disliké, alors on retire son dislike.
-		else if(!aLike($id, $nom)) {
-			$code = suprimerVote($id, $nom);
+		else if(!aLike($linkpdo, $id, $nom)) {
+			$code = suprimerVote($linkpdo, $id, $nom);
 			return $code;
 		}
 		//si l'utilisateur avait liké, on supprime son like et on dislike l'article
-		else if(aLike($id, $nom)) {
-			$code = suprimerVote($id, $nom);
+		else if(aLike($linkpdo, $id, $nom)) {
+			$code = suprimerVote($linkpdo, $id, $nom);
 			if($code == ERREUR_SQL) { return $code; }
-			$code = ajouterVote($id, $nom, false);
+			$code = ajouterVote($linkpdo, $id, $nom, false);
 			return $code;
 		} else {
-			$code = ajouterVote($id, $nom, false);
+			$code = ajouterVote($linkpdo, $id, $nom, false);
 			return $code;
 		}
 	}
@@ -107,7 +107,7 @@
 	//$id --> identifiant de l'article
 	//$aimer --> boolean true = à liké; false = à disliké
 	function NbrLikes($linkpdo, $id, $aimer) {
-		if(!isVote($linkpdo, $id) || is_null($aimer)) {
+		if(!isId($linkpdo, $id) || is_null($aimer)) {
 			return SYNTAXE;
 		}
 	    try{
@@ -126,12 +126,13 @@
 	    if($req->execute()) {
 	        return $req->fetchColumn();;
 	    }
+		return ERREUR_SQL;
 	}
 
 	//Permet de savoir si un utilisateur à liké ou non un article
 	//Renvoie true s'il à liké renvoie false sinon
 	function aLike($linkpdo, $id, $user) {
-		if(!isVoteUser($id, $user)) {
+		if(!isVoteUser($linkpdo, $id, $user)) {
 			return false;
 		}
 		try{

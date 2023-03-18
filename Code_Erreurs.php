@@ -47,8 +47,17 @@
         } elseif($code == SYNTAXE) {
             deliver_response(400, "La syntaxe de la requête est erronée", null);
             return false;
-        } elseif($code == ERREUR_SQL) {
+        } elseif($code == ERREUR_PARAM){
+            deliver_response(400, "Contenu de l'article ne respectant pas les règles (plus de 140 caractères ou syntaxe invalide).", null);
+            return false;
+        } elseif($code == ID_INCONNU) {
+            deliver_response(404, "Veuillez renseigner un ID existant", "ID : ".$_GET['id']." introuvable");
+            return false;
+        }  elseif($code == ERREUR_SQL) {
             deliver_response(500, "Une erreur est survenue pendant l'execution de la requête.", null);
+            return false;
+        } elseif($code == PERMISSION_NON_ACCORDEE) {
+            deliver_response(401, "Permission non accordée", NULL);
             return false;
         }
         return true;

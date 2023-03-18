@@ -42,6 +42,11 @@
                     'nbrDisLikes' => $nbrDisLikes
                 );
                 deliver_response(200, "Résultat de la recherche de l'identifiant ".$_GET['id'].":", $valeursRetour);
+            } else {
+                //Traitement pour consulter ses propres articles
+                $username = getPropertyFromToken($bearer_token, 'username');
+                $code = sesArticles($linkpdo, $username);
+                testsErreurs($code, "Voici tous les articles de l'utilisateur : $username", $code, $codeHTTP=200);
             }
         } elseif($role == 'moderator') {
             //Traitement pour récupérer un Article
@@ -104,15 +109,10 @@
         if ($role == 'publisher'){
             if (!empty($postData['contenu'])) {
                 $code = ajoutArticle($linkpdo, $postData['contenu'], $auteur);
-                if (!is_numeric($code)) {     
-                    testsErreurs($code, "<<<< Erreur >>>>", NULL);
-                    break;
-                }
                 testsErreurs($code, "Article crée avec succès", "ID de l'article : ".$code);
             }
         }
         break;
-
     case "DELETE":
         $bearer_token = '';
         $bearer_token = get_bearer_token();
@@ -151,19 +151,23 @@
     case "PATCH":
         $bearer_token = '';
         $bearer_token = get_bearer_token();
-
+        
         //définie le rôle de l'utilisateur
         $role = verifRole($bearer_token);
         if(is_null($role)) { deliver_response(500, "Erreur de Token.", NULL); break; }
-        if($role == 'publisher') {  
+        if($role == 'publisher') {
             //traitement du like ou dislike
-            if(!empty($_GET['id']) && !empty($_GET['username'])) {
+            if(!empty($_GET['id'])) {
+                //Vérification de l'identifiant
                 if(!isID($linkpdo, $_GET['id'])) {
                     deliver_response(404, "Veuillez renseigner un ID existant", "ID : ".$_GET['id']." introuvable");
                     break;
                 }
+                //Pour savoir s'il aime ou pas son propre poste.
                 $usernameVotant = getPropertyFromToken($bearer_token, 'username');
-                if($usernameVotant == $_GET['username']) {
+                $code = getArticle($linkpdo, $_GET['id']);
+                if(!testsErreursSansSucces($code)) {break;}
+                if($usernameVotant == $code[0]['auteur']) {
                     deliver_response(401, "Permission non accordée, un utilisateur ne peut pas liker ou disliker ses posts.", NULL);
                     break;
                 }   
@@ -175,16 +179,18 @@
                     deliver_response(400, "Il manque des données dans le body. Veuillez préciser si vous avez liké ou disliké un article.", null);
                     break;
                 }
-                //isUsername
+                //S'il like
                 if($data->aimer) {
                     $code = incrementerLikes($linkpdo, $_GET['id'], $usernameVotant);
                     testsErreurs($code, "Votre like est bien pris en compte.", $varARetourner=null, $codeHTTP=200);
                     break;
                 }
+                //S'il dislike
                 $code = incrementerDisLikes($linkpdo, $_GET['id'], $usernameVotant);
                 testsErreurs($code, "Votre dislike est bien pris en compte.", $varARetourner=null, $codeHTTP=200);
                 break;
             }
+        //Un modérateur ou un anonyme ne peut pas voter.
         } elseif($role == 'moderator' || $role == 'anonyme') {
             deliver_response(401, "Permission non accordée", NULL);
         }
