@@ -75,6 +75,9 @@
                     'nbrDisLikes' => $nbrDisLikes
                 );
                 deliver_response(200, "Résultat de la recherche de l'identifiant ".$_GET['id'].":", $valeursRetour);
+            } else {
+                //Traitement Erreur pour consulter ses propres articles
+                deliver_response(401, "Permission non accordée, il faut être publisher pour consulter ses articles", "Rôle : ".$role);
             }
         } else {
             //Cas si utilisateur non authentifié. (Anonymous)
@@ -86,6 +89,9 @@
                 }
                 $articles = getArticle($linkpdo, $_GET['id']);
                 testsErreurs($articles, "Résultat de la recherche de l'identifiant ".$_GET['id'].":", $varARetourner=$articles, $codeHTTP=200);
+            } else {
+                //Traitement Erreur pour consulter ses propres articles
+                deliver_response(401, "Permission non accordée. Veuillez vous connecter.", "Rôle : ".$role);
             }
         }
         break;

@@ -15,7 +15,7 @@
         }
         $role = getRole($data->username, $data->password);
         $headers = array('alg'=>'HS256','typ'=>'JWT');
-        $payload = array('username'=>$data->username, 'exp'=>(time() + 300), 'role'=>$role);
+        $payload = array('username'=>$data->username, 'exp'=>(time() + 10800), 'role'=>$role);
         $jwt = generate_jwt($headers, $payload);
         deliver_response(200, "Vous êtes bien authentifié en tant que ".$role.". Voici votre token :", $jwt);
         break;

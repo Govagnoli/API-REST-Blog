@@ -9,6 +9,11 @@
             "username" => "Anass",
             "password" => "azerty",
             "rôle" => "publisher"
+        ),
+        array(
+            "username" => "Eric",
+            "password" => "azerty",
+            "rôle" => "publisher"
         )
     );
 
