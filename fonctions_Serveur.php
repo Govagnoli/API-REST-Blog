@@ -123,16 +123,21 @@
             return ERREUR_SQL;
         }
 
-        $req->bindParam(':contenu', $contenu, PDO::PARAM_STR);
-        $req->bindParam(':auteur', $auteur, PDO::PARAM_STR);
-        try {
-            $req->execute();
-            $id = $linkpdo->lastInsertId();//permet de récupèrer l'id de la dernière données ajouter à la bd
-        } catch (Exception $e) {
-            $linkpdo->rollback();
-            return ERREUR_SQL;
+        $params = [
+            [':contenu', $contenu, PDO::PARAM_STR],
+            [':auteur', $auteur, PDO::PARAM_STR],
+        ];
+        foreach ($params as $param) {
+            if (!$req->bindParam($param[0], $param[1], $param[2])) {
+                return ERREUR_SQL;
+            }
         }
 
+        if (!$req->execute()){
+            $linkpdo->rollback();
+            return ERREUR_SQL;
+        } 
+        $id = $linkpdo->lastInsertId();//permet de récupèrer l'id de la dernière données ajouter à la bd 
         $linkpdo->commit();
         return $id;//retourne l'ID pour la personnalisation du message de retour
     }
