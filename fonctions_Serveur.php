@@ -163,12 +163,11 @@
             $linkpdo->rollback();
             return ERREUR_SQL;
         }
-        try {
-            $matchingData->execute();
-        } catch (Exception $e) {
+        if (!$matchingData->execute()){
             $linkpdo->rollback();
             return ERREUR_SQL;
-        }
+        }  
+        $linkpdo->commit();
         return $id;//retourne l'ID pour la personnalisation du message de retour
     }
     
@@ -199,7 +198,10 @@
         }
         $data  = getArticle($linkpdo, $_GET['id']);
         if (empty($data)){
-            return SYNTAXE;
+            return ID_INCONNU;
+        }
+        if ($data == ERREUR_SQL || $data == SYNTAXE){
+            return $data;
         }
         $data = $data[0];
         $auteur = $data['auteur'];
@@ -226,5 +228,35 @@
         	return $req->fetchAll(PDO::FETCH_ASSOC);
 	    }
         return ERREUR_SQL;
+    }
+    function modifierArticle($linkpdo, $id, $contenu){
+        if (!isset($contenu) || !is_numeric($id)){
+            return SYNTAXE;
+        }
+
+        $data = getArticle($linkpdo, $id);
+        if ($data == ERREUR_SQL || $data == SYNTAXE){
+            return $data;
+        }
+        try {
+            $matchingData = $linkpdo->prepare("UPDATE article SET contenu = :contenu WHERE id = :id");
+        } catch (Exception $e) {
+            return ERREUR_SQL;
+        }
+
+        $params = [
+            [':id', $id, PDO::PARAM_INT],
+            [':contenu',$contenu, PDO::PARAM_STR],
+        ];
+        foreach ($params as $param) {
+            if (!$matchingData->bindParam($param[0], $param[1], $param[2])) {
+                return ERREUR_SQL;
+            }
+        }
+
+        if (!$matchingData->execute()){
+            return ERREUR_SQL;
+        }  
+        return $id;
     }
 ?>
