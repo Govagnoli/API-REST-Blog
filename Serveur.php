@@ -196,6 +196,22 @@
                 testsErreurs($code, "Votre dislike est bien pris en compte.", $varARetourner=null, $codeHTTP=200);
                 break;
             }
+            
+            if(!empty($_GET['id']) && !empty($postedData)) {
+                $code = getAuteurArticle($linkpdo, $_GET['id']);
+                if(!testsErreursSansSucces($code)) { break; }
+                
+                if (!($code == getPropertyFromToken($bearer_token, 'username'))){
+                    deliver_response(401, "Permission non accordée, un utilisateur ne peut modifier un article dont il n'est pas l'auteur", NULL);
+                    break;
+                }
+                $data = (array)$postedData;
+                $phrase = $data['contenu'];
+                if (getArticle($linkpdo, $_GET['id'])){
+                    $code = modifierArticle($linkpdo, $_GET['id'], $phrase);
+                    testsErreurs($code, "L'article a bien été modifié, ID : ".$_GET['id'], $code);
+                }
+            }
         //Un modérateur ou un anonyme ne peut pas voter.
         } elseif($role == 'moderator' || $role == 'anonyme') {
             deliver_response(401, "Permission non accordée", NULL);
