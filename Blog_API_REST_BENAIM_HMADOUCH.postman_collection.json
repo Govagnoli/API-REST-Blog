@@ -1,0 +1,1015 @@
+{
+	"info": {
+		"_postman_id": "163d71c8-17ca-48b1-8266-f4c72919446a",
+		"name": "Blog API_REST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25747866"
+	},
+	"item": [
+		{
+			"name": "Authentification",
+			"item": [
+				{
+					"name": "Erreurs",
+					"item": [
+						{
+							"name": "Erreur Moderator Authentification",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"username\":\"Elitt\", \"password\":\"1234\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost/R4.01/Projet/ServeurAuthentification.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"R4.01",
+										"Projet",
+										"ServeurAuthentification.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur Publisher Authentification",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"username\":\"Anass\", \"password\":\"aerty\"}"
+								},
+								"url": {
+									"raw": "http://localhost/R4.01/Projet/ServeurAuthentification.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"R4.01",
+										"Projet",
+										"ServeurAuthentification.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Moderator Authentification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"Eliott\", \"password\":\"1234\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/R4.01/Projet/ServeurAuthentification.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"R4.01",
+								"Projet",
+								"ServeurAuthentification.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publisher Authentification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"Anass\", \"password\":\"azerty\"}"
+						},
+						"url": {
+							"raw": "http://localhost/R4.01/Projet/ServeurAuthentification.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"R4.01",
+								"Projet",
+								"ServeurAuthentification.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publisher Authentification sans articles publié",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"Eric\", \"password\":\"azerty\"}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost/R4.01/Projet/ServeurAuthentification.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"R4.01",
+								"Projet",
+								"ServeurAuthentification.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get",
+			"item": [
+				{
+					"name": "Erreurs",
+					"item": [
+						{
+							"name": "Moderator getById id inconnu",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVsaW90dCIsImV4cCI6MTY3OTU3ODA4Niwicm9sZSI6Im1vZGVyYXRvciJ9.v_zHylvgjY9HilRBBe5XgyuPy7kUDJM1jFsY_CYZAjU",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost/R4.01/Projet/Serveur.php?id=1000",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"R4.01",
+										"Projet",
+										"Serveur.php"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Publisher getById id Inconnu",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFuYXNzIiwiZXhwIjoxNjc5MDg2MzIzLCJyb2xlIjoicHVibGlzaGVyIn0.pTLMymN2vMYBiHTsCQYi-fHBOcp2Vlup5FgoJMWvL4A",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost/R4.01/Projet/Serveur.php?id=1000",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"R4.01",
+										"Projet",
+										"Serveur.php"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur Moderator Ses Articles",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVsaW90dCIsImV4cCI6MTY3OTU3ODI2MSwicm9sZSI6Im1vZGVyYXRvciJ9.3THKuIyBVeqpTXOVjBX4yrNFDD2WPesVsAz_f2TwsIs",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost/R4.01/Projet/Serveur.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"R4.01",
+										"Projet",
+										"Serveur.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur Anonyme Ses Articles",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "http://localhost/R4.01/Projet/Serveur.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"R4.01",
+										"Projet",
+										"Serveur.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Moderator getById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVsaW90dCIsImV4cCI6MTY3OTU3ODA4Niwicm9sZSI6Im1vZGVyYXRvciJ9.v_zHylvgjY9HilRBBe5XgyuPy7kUDJM1jFsY_CYZAjU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/R4.01/Projet/Serveur.php?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"R4.01",
+								"Projet",
+								"Serveur.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publisher getById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFuYXNzIiwiZXhwIjoxNjgwMTgwODcwLCJyb2xlIjoicHVibGlzaGVyIn0.iBjEBZ3MzIXP-leeoGzBYZPL6JQvUfVwU3nDc9RSLgQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/R4.01/Projet/Serveur.php?id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"R4.01",
+								"Projet",
+								"Serveur.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publisher Ses Articles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFuYXNzIiwiZXhwIjoxNjgwMTgwODcwLCJyb2xlIjoicHVibGlzaGVyIn0.iBjEBZ3MzIXP-leeoGzBYZPL6JQvUfVwU3nDc9RSLgQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/R4.01/Projet/Serveur.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"R4.01",
+								"Projet",
+								"Serveur.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publisher Ses Articles, sans articles à retourner (Eric azerty)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVyaWMiLCJleHAiOjE2Nzk1ODE5MjksInJvbGUiOiJwdWJsaXNoZXIifQ.-0aXQ_LeenHHRob4zPXejpw_sJctGbABv3PhKkTIz80",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/R4.01/Projet/Serveur.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"R4.01",
+								"Projet",
+								"Serveur.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Anonymous getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/R4.01/Projet/Serveur.php?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"R4.01",
+								"Projet",
+								"Serveur.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vote",
+			"item": [
+				{
+					"name": "Erreurs",
+					"item": [
+						{
+							"name": "Erreur Moderator Aimer",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVsaW90dCIsImV4cCI6MTY3OTU3ODg5NCwicm9sZSI6Im1vZGVyYXRvciJ9.Vtk0GDZBm-F9mKV35Bj5BjzkVVaULY2aZzzLeNK_BB4",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"aimer\": false}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost/R4.01/Projet/Serveur.php?id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"R4.01",
+										"Projet",
+										"Serveur.php"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur Publisher Aimer ses posts (Anass azerty)",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFuYXNzIiwiZXhwIjoxNjc5NTc4OTQ3LCJyb2xlIjoicHVibGlzaGVyIn0.KVmEi_KXfLMgSt54PMTeRh8NMVCTs3W8SvP_YdK_dmU",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"aimer\": true}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost/R4.01/Projet/Serveur.php?id=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"R4.01",
+										"Projet",
+										"Serveur.php"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Publisher Aimer true",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFuYXNzIiwiZXhwIjoxNjc5NTc4OTQ3LCJyb2xlIjoicHVibGlzaGVyIn0.KVmEi_KXfLMgSt54PMTeRh8NMVCTs3W8SvP_YdK_dmU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"aimer\": true}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/R4.01/Projet/Serveur.php?id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"R4.01",
+								"Projet",
+								"Serveur.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publisher Aimer false",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFuYXNzIiwiZXhwIjoxNjc4OTY5MzcwLCJyb2xlIjoicHVibGlzaGVyIn0.p3gW2k5TRDjmywHt9Sq4AlxUwaGIKcnU8qiPXZWwS3Q",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"aimer\": false}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/R4.01/Projet/Serveur.php?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"R4.01",
+								"Projet",
+								"Serveur.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Publier Article",
+			"item": [
+				{
+					"name": "Erreurs",
+					"item": [
+						{
+							"name": "Erreur Moderator poster article",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVsaW90dCIsImV4cCI6MTY3OTU4MTIzMiwicm9sZSI6Im1vZGVyYXRvciJ9.qpI0E3-XjtpaL804chdfpICWGk5wT61Tw6VudGoXZKo",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"contenu\": \"Le 49.3 c'est pas ouf.\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost/R4.01/Projet/Serveur.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"R4.01",
+										"Projet",
+										"Serveur.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur anonyme poster article",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"contenu\": \"Le 49.3 c'est pas ouf.\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost/R4.01/Projet/Serveur.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"R4.01",
+										"Projet",
+										"Serveur.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Publisher poster article",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFuYXNzIiwiZXhwIjoxNjc5NTgwNzg5LCJyb2xlIjoicHVibGlzaGVyIn0.Bfoa9lnCiHTb-gp6m86VVIGO6cfbj3sub11QXSdmXu0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"contenu\": \"Le 49.3 c'est pas ouf.\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/R4.01/Projet/Serveur.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"R4.01",
+								"Projet",
+								"Serveur.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete",
+			"item": [
+				{
+					"name": "Erreurs",
+					"item": [
+						{
+							"name": "Publisher supprime pas ses articles",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer ",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost/R4.01/Projet/Serveur.php?id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"R4.01",
+										"Projet",
+										"Serveur.php"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Anonyme supprime des articles",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost/R4.01/Projet/Serveur.php?id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"R4.01",
+										"Projet",
+										"Serveur.php"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Publisher supprime ses articles",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/R4.01/Projet/Serveur.php?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"R4.01",
+								"Projet",
+								"Serveur.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Moderator supprime des articles",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVsaW90dCIsImV4cCI6MTY4MDExMTAxMiwicm9sZSI6Im1vZGVyYXRvciJ9.AQ2EGDhBAqC1P57scW0YCvFCJMjBH1r2E-THXeU_3wM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/R4.01/Projet/Serveur.php?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"R4.01",
+								"Projet",
+								"Serveur.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Modifier article",
+			"item": [
+				{
+					"name": "Erreurs",
+					"item": [
+						{
+							"name": "Moderateur modifier article",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVsaW90dCIsImV4cCI6MTY4MDEyOTg2Niwicm9sZSI6Im1vZGVyYXRvciJ9.pgoy87YuNBwZ5ZmURA3wiC9ajf1Nff8oYeuweaQIu_s",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"contenu\": \"Go Vegan !\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost/R4.01/Projet/Serveur.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"R4.01",
+										"Projet",
+										"Serveur.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Anonyme modifier article",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVsaW90dCIsImV4cCI6MTY4MDEyOTg2Niwicm9sZSI6Im1vZGVyYXRvciJ9.pgoy87YuNBwZ5ZmURA3wiC9ajf1Nff8oYeuweaQIu_s",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"contenu\": \"Go Vegan !\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost/R4.01/Projet/Serveur.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"R4.01",
+										"Projet",
+										"Serveur.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Publisher modif pas son artcle",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVyaWMiLCJleHAiOjE2ODAxMzEwNjcsInJvbGUiOiJwdWJsaXNoZXIifQ.F28_KWFtww8FbzZZHoR293uzzjpXqI7ItYWL6FABfEE",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"contenu\": \"Go Vegan !\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost/R4.01/Projet/Serveur.php?id=3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"R4.01",
+										"Projet",
+										"Serveur.php"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Publisher modif son article",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFuYXNzIiwiZXhwIjoxNjgwMTMxNzI0LCJyb2xlIjoicHVibGlzaGVyIn0.1cy9OhLrio8RxLWlLP3fKzBGCr0A9UktxcrtJt2dWns",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"contenu\": \"Go Vegan !\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/R4.01/Projet/Serveur.php?id=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"R4.01",
+								"Projet",
+								"Serveur.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
