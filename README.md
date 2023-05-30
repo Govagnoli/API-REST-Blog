@@ -23,4 +23,4 @@ La gestion des restrictions d'accès :
                
 La gestion des Erreurs fut un point important lors du développement. Notre API est entièrement couverte en message d'erreur avec des réponses pertinentes en fonction des problèmes reçu.
 
-Pour faire fonctionner notre API nous utilisons WAMP Serveur fournissant un hébergement local gratuit avec MYSQL et Apache.
+Pour faire fonctionner notre API nous utilisons WAMP Serveur fournissant un hébergement local gratuit avec MYSQL, Apache et un interpréteur de script php.
