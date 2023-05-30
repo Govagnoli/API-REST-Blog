@@ -1,9 +1,10 @@
 # API-REST-Blog
 
 Création d'une API pour la gestion d'un blog. Notre API prend en compte les fonctionnalités suivantes :
-  ● La publication, la consultation, la modification et la suppression des articles de blogs. Un article est caractérisé, a minima, par sa date de publication, son auteur et son contenu.
-  ● L’authentification des utilisateurs souhaitant interagir avec les articles. Cette fonctionnalité devra s’appuyer sur les JSON Web Token (JWT). Un utilisateur est caractérisé, a minima, par un nom d’utilisateur, un mot       de passe et un rôle (moderator ou publisher).
-  ● La possibilité de liker/disliker un article. La solution doit permettre de retrouver quel(s) utilisateur(s) a liké/disliké un article.
+
+    ● La publication, la consultation, la modification et la suppression des articles de blogs. Un article est caractérisé, a minima, par sa date de publication, son auteur et son contenu.
+    ● L’authentification des utilisateurs souhaitant interagir avec les articles. Cette fonctionnalité devra s’appuyer sur les JSON Web Token (JWT). Un utilisateur est caractérisé, a minima, par un nom d’utilisateur, un mot de passe et un rôle (moderator ou publisher).
+    ● La possibilité de liker/disliker un article. La solution doit permettre de retrouver quel(s) utilisateur(s) a liké/disliké un article.
 
 La gestion des restrictions d'accès :
 
