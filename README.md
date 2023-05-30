@@ -1,4 +1,6 @@
 # API-REST-Blog
+L'API fut réalisé lors de ma deuxième année de BUT informatique. (2022-2023)
+
 
 Création d'une API pour la gestion d'un blog. Notre API prend en compte les fonctionnalités suivantes :
 
